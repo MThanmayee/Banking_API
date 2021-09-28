@@ -13,6 +13,7 @@ namespace BankingProject.Controllers
     public class AccountController : ControllerBase
     {
         BankingProjectContext db;
+
         public AccountController(BankingProjectContext context)
         {
             db = context;
