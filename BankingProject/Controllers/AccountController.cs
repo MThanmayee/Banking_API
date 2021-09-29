@@ -18,10 +18,30 @@ namespace BankingProject.Controllers
         {
             db = context;
         }
-        [HttpGet]
-        public IActionResult Get()
+        [HttpGet("display")]
+        public IActionResult GetDetails(string EmailId)
         {
-            return Ok(db.UserProfile);
+            return Ok(db.UserProfile.Where(x=>x.EmailId==EmailId).FirstOrDefault());
+        }
+
+        [HttpGet("getnumber")]
+        public IActionResult GetNumber(int customerid)
+        {
+            var q = db.Account.Where(x => x.CustomerId == customerid).FirstOrDefault();
+            return Ok(q);
+        }
+
+        [HttpGet("Summary")]
+        public IActionResult GetAccountById(long accountnumber)
+        {
+
+            Account account1 = db.Account.Find(accountnumber);
+            if (account1 != null)
+                return Ok(account1);
+            else
+                return BadRequest();
+
+
         }
 
         [HttpPost("OpenNewAccount")]
@@ -88,5 +108,37 @@ namespace BankingProject.Controllers
                     }
                     return Ok(new { status = "unsuccessful" });
                 }*/
+
+
+        [HttpGet("transactions")]
+        public IActionResult GetTransaction(long AccountNumber)
+        {
+            Transactions from = db.Transactions.Where(x => x.FromAccount == AccountNumber).FirstOrDefault();
+            Transactions to = db.Transactions.Where(x => x.ToAccount == AccountNumber).FirstOrDefault();
+
+            var A = from t1 in db.Transactions
+                    where t1.FromAccount == AccountNumber || t1.ToAccount == AccountNumber
+                    select t1;
+                    
+            if(from != null && to != null)
+            {
+                return Ok(A);
+            }
+            else if(from != null)
+            {
+                return Ok(from);
+            }
+            else if(to!= null)
+            {
+                return Ok(to);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
+
+
+
 }
