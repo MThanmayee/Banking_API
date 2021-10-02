@@ -23,6 +23,7 @@ namespace BankingProject.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public string TransactionPassword { get; set; }
+        public string Otp { get; set; }
 
         public virtual UserProfile EmailNavigation { get; set; }
         public virtual ICollection<Benificiaries> Benificiaries { get; set; }

@@ -17,6 +17,8 @@ namespace BankingProject.Models
         public string TransactionType { get; set; }
         public string MaturityInstructions { get; set; }
         public string Remarks { get; set; }
+        public decimal? ClosingBalance { get; set; }
+        public decimal? ToClosingBalance { get; set; }
 
         public virtual Account FromAccountNavigation { get; set; }
         public virtual Benificiaries ToAccountNavigation { get; set; }
